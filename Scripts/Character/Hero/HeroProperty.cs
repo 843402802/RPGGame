@@ -6,7 +6,7 @@ using Global;
 
 public class HeroProperty : MonoBehaviour {
 
-    public static event del_PlayerKernalModel evePlayerKernal;//玩家核心数值
+    public static event del_PlayerData evePlayerData;//玩家核心数值
 
     //玩家核心数值
     public float _FloHP_Cur = 100F;                                         //当前生命
@@ -33,6 +33,12 @@ public class HeroProperty : MonoBehaviour {
 
     public const int ENEMY_MIN_ATK = 1;//敌人最低攻击力
 
+    private Hero _Hero;
+
+    private void Start()
+    {
+        _Hero = GetComponent<Hero>();
+    }
     #region 角色状态属性
     public float Health
     {
@@ -45,10 +51,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloHP_Cur = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Health", Health);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -65,10 +71,10 @@ public class HeroProperty : MonoBehaviour {
             _FloMP_Cur = value;
 
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Magic", Magic);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -85,10 +91,10 @@ public class HeroProperty : MonoBehaviour {
             _FloATK_Cur = value;
 
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Attack", Attack);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -104,10 +110,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloDEF_Cur = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Defence", Defence);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -124,10 +130,10 @@ public class HeroProperty : MonoBehaviour {
             _FloDEF_Cur = value;
 
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Dexterity", Dexterity);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -143,10 +149,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloHP_Max = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("MaxHealth", MaxHealth);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -163,10 +169,10 @@ public class HeroProperty : MonoBehaviour {
             _FloATK_Max = value;
 
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("MaxAttack", MaxAttack);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -183,10 +189,10 @@ public class HeroProperty : MonoBehaviour {
             _FloMP_Max = value;
 
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("MaxMagic", MaxMagic);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -202,10 +208,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloDEF_Max = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("MaxDefence", MaxDefence);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -221,10 +227,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloDEX_Max = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("MaxDexterity", MaxDexterity);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -240,10 +246,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloATKByProp = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("AttackByProp", AttackByProp);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -259,10 +265,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloDEXByProp = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("DefenceByProp", DefenceByProp);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -278,10 +284,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _FloDEXByProp = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("DexterityByProp", DexterityByProp);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -306,12 +312,6 @@ public class HeroProperty : MonoBehaviour {
         {
             Health -= ENEMY_MIN_ATK;
         }
-        Debug.Log(enemyReallyATK);
-
-        ////更新攻击力、防御力、敏捷度
-        //this.UpdateATKValues();
-        //this.UpdateDEFValues();
-        //this.UpdateDEXValues();
     }
     /// <summary>
     /// 增加生命数值
@@ -420,7 +420,7 @@ public class HeroProperty : MonoBehaviour {
     #region 攻击力数值操作
     /// <summary>
     /// 更新攻击力（典型应用场景：主角健康值改变；取得新武器）
-    /// 公式：_AttackForce=MaxATK/2*(_Health/MaxHealth)+[“武器攻击力”]
+    /// 公式：_AttackForce=MaxATK+[“武器攻击力”]
     /// </summary>
     /// <param name="newWeaponValues">新武器数值</param>
     public void UpdateATKValues(float newWeaponValues = 0)
@@ -429,12 +429,12 @@ public class HeroProperty : MonoBehaviour {
 
         if (newWeaponValues == 0)//没有获取新的武器道具
         {
-            reallyATKValues = MaxAttack / 2 * (Health / MaxHealth) + AttackByProp;
+            reallyATKValues = MaxAttack + AttackByProp;
         }
         else if (newWeaponValues > 0)//取得武器道具
         {
             AttackByProp = newWeaponValues;
-            reallyATKValues = MaxAttack / 2 * (Health / MaxHealth) + AttackByProp;
+            reallyATKValues = MaxAttack + AttackByProp;
         }
         //数值有效性验证
         if (reallyATKValues > MaxAttack)
@@ -475,7 +475,7 @@ public class HeroProperty : MonoBehaviour {
     #region 防御力数值操作
     /// <summary>
     /// 更新防御力（典型应用场景：主角健康值改变；取得新武器）
-    /// 公式：_Defence=MaxDEF/2*(_Health/MaxHealth)+[武器防御力]
+    /// 公式：_Defence=MaxDEF+[武器防御力]
     /// </summary>
     /// <param name="newWeaponDEFValues">新防御武器数值</param>
     public void UpdateDEFValues(float newWeaponDEFValues = 0)
@@ -484,12 +484,12 @@ public class HeroProperty : MonoBehaviour {
 
         if (newWeaponDEFValues == 0)//没有获取新的武器道具
         {
-            reallyDEFValues = MaxDefence / 2 * (Health / MaxHealth) + DefenceByProp;
+            reallyDEFValues = MaxDefence + DefenceByProp;
         }
         else if (newWeaponDEFValues > 0)//取得武器道具
         {
             DefenceByProp = newWeaponDEFValues;
-            reallyDEFValues = MaxDefence / 2 * (Health / MaxHealth) + DefenceByProp;
+            reallyDEFValues = MaxDefence + DefenceByProp;
         }
         //数值有效性验证
         if (reallyDEFValues > MaxDefence)
@@ -530,7 +530,7 @@ public class HeroProperty : MonoBehaviour {
     #region 敏捷度数值操作
     /// <summary>
     /// 更新敏捷度（典型应用场景：主角健康值改变；防御力改变；取得新武器）
-    /// 公式：_MoveSpeed=MaxMoveSpeed/2*(_Health/MaxHealth)-_Defence+[道具敏捷力]
+    /// 公式：_MoveSpeed=MaxMoveSpeed+[道具敏捷力]
     /// </summary>
     /// <param name="newWeaponValues">新武器数值</param>
     public void UpdateDEXValues(float newWeaponValues = 0)
@@ -539,12 +539,12 @@ public class HeroProperty : MonoBehaviour {
 
         if (newWeaponValues == 0)//没有获取新的武器道具
         {
-            reallyDEXValues = MaxDexterity / 2 * (Health / MaxHealth) - Defence + DexterityByProp;
+            reallyDEXValues = MaxDexterity + DexterityByProp;
         }
         else if (newWeaponValues > 0)//取得武器道具
         {
             DexterityByProp = newWeaponValues;
-            reallyDEXValues = MaxDexterity / 2 * (Health / MaxHealth) - Defence + DexterityByProp;
+            reallyDEXValues = MaxDexterity + DexterityByProp;
         }
         //数值有效性验证
         if (reallyDEXValues > MaxDexterity)
@@ -596,10 +596,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _IntEXP = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Experience", Experience);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -615,10 +615,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _IntKillNum = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("KillNumber", KillNumber);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -634,10 +634,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _IntLevel = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Level", Level);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -653,10 +653,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _IntGold = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Gold", Gold);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }
@@ -672,10 +672,10 @@ public class HeroProperty : MonoBehaviour {
         {
             _IntDiamonds = value;
             //事件调用
-            if (evePlayerKernal != null)
+            if (evePlayerData != null)
             {
                 KeyValuesUpdate kv = new KeyValuesUpdate("Diamonds", Diamonds);
-                evePlayerKernal(kv);
+                evePlayerData(kv);
             }
         }
     }

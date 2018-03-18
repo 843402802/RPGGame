@@ -11,6 +11,11 @@ public class HeroAttackControl : MonoBehaviour {
     public float FloHeroRotationSpeed = 1F;                                //主角旋转速率
     public float FloRealAttackArea = 2F;                                   //主角实际有效攻击距离
 
+    //关于大招攻击参数定义
+    public float FloAttackAreaByMagicA = 4F;                               //大招A的攻击范围
+    public float FloAttackAreaByMagicB = 8F;                               //大招B的攻击范围
+    public int IntAttackPowerMultipleByMagicA = 3;                         //大招A的攻击力倍率
+    public int IntAttackPowerMultipleByMagicB = 5;                        //大招B的攻击力倍率
 
     private List<GameObject> _ListEnemys;                                  //敌人集合
     private Transform _TraNearestEnemy;                                    //最近敌人方位
@@ -20,7 +25,7 @@ public class HeroAttackControl : MonoBehaviour {
 
     void Awake()
     {
-        //事件注册: 主角攻击输入（键盘的事件）
+        //事件注册: 主角攻击输入
         PlayerInputControl.evePlayerControl += ResponseNormalAttack;
         PlayerInputControl.evePlayerControl += ResponseMagicTrickA;
         PlayerInputControl.evePlayerControl += ResponseMagicTrickB;
@@ -33,7 +38,7 @@ public class HeroAttackControl : MonoBehaviour {
         _Hero = GetComponent<Hero>();
     }
 
-    #region 响应攻击输入
+    #region 响应攻击输入  手机端控件操作
     /// <summary>
     /// 响应普通攻击
     /// </summary>
@@ -44,8 +49,6 @@ public class HeroAttackControl : MonoBehaviour {
         {
             //播放攻击动画
             _Hero.HeroAnimationControl.SetCurrentActionState(HeroActionState.NormalAttack);
-            //给特定敌人以伤害处理
-            AttackEnemyByNormal();
         }
     }
 
@@ -58,9 +61,6 @@ public class HeroAttackControl : MonoBehaviour {
         {
             //播放攻击动画
             _Hero.HeroAnimationControl.SetCurrentActionState(HeroActionState.MagicTrickA);
-
-            //给特定敌人以伤害处理
-            StartCoroutine("AttackEnemyByMagicA");
         }
     }
 
@@ -73,27 +73,35 @@ public class HeroAttackControl : MonoBehaviour {
         {
             //播放攻击动画
             _Hero.HeroAnimationControl.SetCurrentActionState(HeroActionState.MagicTrickB);
-
-            //给特定敌人以伤害处理
         }
     }
     #endregion
 
     
     //普攻
-    private void AttackEnemyByNormal()
+    public void AttackEnemyByNormal()
     {
         AttackEnemy(_ListEnemys, _TraNearestEnemy, FloRealAttackArea, 1, true);
     }
+    //A大招
+    public void AttackEnemyByMagicA()
+    {
+        AttackEnemy(_ListEnemys, _TraNearestEnemy, FloAttackAreaByMagicA, IntAttackPowerMultipleByMagicA, false); ;
+    }
+    //B大招
+    public void AttackEnemyByMagicB()
+    {
+        AttackEnemy(_ListEnemys, _TraNearestEnemy, FloAttackAreaByMagicB, IntAttackPowerMultipleByMagicB);
+    }
     /// <summary>
-    /// 公共方法：攻击敌人
+    /// 攻击敌人
     /// </summary>
     /// <param name="attackArea">攻击范围</param>
     /// <param name="attackPowerMultiple">攻击力度（倍率）</param>
     /// <param name="isDirection">攻击是否有方向性</param>
     private void AttackEnemy(List<GameObject> lisEnemys, Transform traNearestEnemy, float attackArea, int attackPowerMultiple, bool isDirection = true)
     {
-        Debug.Log("AttackEnemy");
+        //Debug.Log("AttackEnemy");
         //参数检查
         if (lisEnemys == null || lisEnemys.Count <= 0)
         {
@@ -134,8 +142,7 @@ public class HeroAttackControl : MonoBehaviour {
         }
     }
 
-
-#region 攻击目标判定
+   #region 攻击目标判定
     /// <summary>
     /// 把附近敌人放入“敌人数组”
     /// </summary>
@@ -184,5 +191,5 @@ public class HeroAttackControl : MonoBehaviour {
             }
         }
     }
-#endregion
+    #endregion
 }

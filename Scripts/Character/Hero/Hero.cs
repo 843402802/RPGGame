@@ -10,7 +10,6 @@ public class Hero : MonoBehaviour {
     private CharacterController _CharacterController;
     private Animation _Animation;
     private HeroAnimationControl _HeroAnimationControl;
-    private HeroMovingControl _HeroMovingControl;
     private HeroAttackControl _HeroAttackControl;
     private PlayerInputControl _PlayerInputControl;
     private HeroProperty _HeroProperty;
@@ -37,14 +36,6 @@ public class Hero : MonoBehaviour {
         get
         {
             return _HeroAnimationControl;
-        }
-    }
-
-    public HeroMovingControl HeroMovingControl
-    {
-        get
-        {
-            return _HeroMovingControl;
         }
     }
 
@@ -78,7 +69,6 @@ public class Hero : MonoBehaviour {
         _Animation = GetComponentInChildren<Animation>();
         _CharacterController = GetComponent<CharacterController>();
         _HeroAnimationControl = GetComponent<HeroAnimationControl>();
-        _HeroMovingControl = GetComponent<HeroMovingControl>();
         _HeroAttackControl = GetComponent<HeroAttackControl>();
         _PlayerInputControl = GetComponent<PlayerInputControl>();
         _HeroProperty = GetComponent<HeroProperty>();

@@ -1,8 +1,10 @@
 ﻿using Global;
+using Kernal;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+
 
 public class HeroAnimationControl : MonoBehaviour {
 
@@ -118,5 +120,61 @@ public class HeroAnimationControl : MonoBehaviour {
         }
     }
 
-    
+    /// <summary>
+    /// 动画事件_主角大招A
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AnimationEvent_HeroMagicA()
+    {
+
+        StartCoroutine(LoadParticalEffect(0.1f,
+            "ParticleProps/bruceSkill", true, transform.position, transform, null, 0.5f));
+        yield break;  //(相当于 方法中的 return null)
+    }
+
+    /// <summary>
+    /// 动画事件_主角大招B
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator AnimationEvent_HeroMagicB()
+    {
+        StartCoroutine(LoadParticalEffect(0.1f,
+            "ParticleProps/groundBrokeRed", true, transform.position + transform.TransformDirection(new Vector3(0F, 0F, 3F)),//特效位置在主角前方5m
+            null, null, 1.0f));
+        yield break;  //(相当于 方法中的 return null)
+
+    }
+    /// <summary>
+    /// 粒子特效方法
+    /// </summary>
+    /// <param name="intervalTime">间隔时间</param>
+    /// <param name="strParticalEffectPath">粒子特效路径</param>
+    /// <param name="IsUseCache">是否使用缓存</param>
+    /// <param name="particalEffectPosition">粒子特效方位</param>
+    /// <param name="tranParent"></param>
+    /// <param name="strAudioEffect"></param>
+    /// <param name="destroyTime"></param>
+    /// <returns></returns>
+    IEnumerator LoadParticalEffect(float intervalTime, string strParticalEffectPath, bool IsUseCache,
+               Vector3 particalEffectPosition, Transform tranParent, string strAudioEffect = null, float destroyTime = 0)
+    {
+        //间隔时间
+        yield return new WaitForSeconds(intervalTime);
+        //提取的粒子预设
+        GameObject goParticalPrefab = ResourcesMgr.GetInstance().LoadAsset(strParticalEffectPath, IsUseCache);
+        //粒子预设的位置            
+        goParticalPrefab.transform.position = particalEffectPosition;
+        //父子对象
+        if (tranParent != null)
+        {
+            goParticalPrefab.transform.parent = tranParent;
+        }
+        //销毁时间
+        if (destroyTime > 0)
+        {
+            Destroy(goParticalPrefab, destroyTime);
+        }
+    }
+
+
 }

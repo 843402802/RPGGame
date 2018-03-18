@@ -5,17 +5,21 @@ using Global;
 public class EnemyAnimationEvent : MonoBehaviour {
 
     private EnemyAnimation _EnemyAnimation;
+    private AudioSource _AudioSource;
+
+    public AudioClip _AttackClip;
 
     private void Start()
     {
         _EnemyAnimation = GetComponentInParent<EnemyAnimation>();
+        _AudioSource = GetComponent<AudioSource>();
     }
 
-    /// <summary>
-    /// 攻击主角（动画事件）
-    /// </summary>
     public void AttackAnimationEvent()
     {
         _EnemyAnimation.AttackHeroByAnimationEvent();
+        _AudioSource.clip = _AttackClip;
+        _AudioSource.Play();
     }
+
 }

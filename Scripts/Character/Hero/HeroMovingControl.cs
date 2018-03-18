@@ -36,7 +36,6 @@ public class HeroMovingControl : MonoBehaviour {
         float floMovingXPos = Input.GetAxis("Horizontal");//从-1到1偏移量
         float floMovingYPos = Input.GetAxis("Vertical");
 
-
         if (floMovingXPos != 0 || floMovingYPos != 0)
         {
             //设置角色的朝向（朝向当前坐标+摇杆偏移量）

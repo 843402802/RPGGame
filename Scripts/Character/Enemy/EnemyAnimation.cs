@@ -7,7 +7,7 @@ public class EnemyAnimation : MonoBehaviour {
 
     private EnemyProperty _EnemyProperty;                            //本身属性
     private Hero _Hero;
-    private Animator _Animator;                                            //战士的动画状态机
+    private Animator _Animator;                                     //战士的动画状态机
     private bool _IsAlive = true;                                    
 
     void OnEnable()
@@ -36,7 +36,7 @@ public class EnemyAnimation : MonoBehaviour {
     }
 
     /// <summary>
-    /// 播放战士动画A（休闲、行走、攻击）
+    /// 播放动画A（休闲、行走、攻击）
     /// </summary>
     /// <returns></returns>
     IEnumerator PlayWarriorAnimation_A()
@@ -65,7 +65,7 @@ public class EnemyAnimation : MonoBehaviour {
         }
     }
     /// <summary>
-    /// 播放战士动画B（受伤、死亡）
+    /// 播放动画B（受伤、死亡）
     /// </summary>
     /// <returns></returns>
     IEnumerator PlayWarriorAnimation_B()
